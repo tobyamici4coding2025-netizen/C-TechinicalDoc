@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common C++ Vulnerability's</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+    <nav id="navbar"> 
+        <header><h1><bold>Common C++ Code Vulnerability</bold></h1></header>
+        <ul>
+            <li><a class="active" href="#Intro">Intro</a></li>
+            <li><a href="#Legal_Disclaimer">Legal Disclaimer</a></li>
+            <li><a href="#What_is_C++">What is C++</a></li>
+            <li><a href="#Why_is_this_important">Why is this important</a></li>
+            <li><a href="#Best_Practices">Best Practices</a></li>
+            <li><a href="#Buffer_Overflow">Buffer Overflow</a></li>
+            <li><a href="#NULL_Pointer_Dereference">NULL Pointer Dereference</a></li>
+            <li><a href="#Integer_Overflow">Integer Overflow</a></li>
+            <li><a href="#Format_String_Vulnerability">Format String Vulnerability</a></li>
+            <li><a href="#Many_Thanks">Many Thanks</a></li>
+        </ul>        
+     </nav>   
+             
+        <main id="main-doc">
+            <section class="main-section" id="Intro">
+                <header><h2>Intro</h2></header>
+                <article>
+                    <p>
+                        This article will discuss common vulnerabilities in C++ code. 
+                        You will see examples of the vulnerabilities we go over, how they can 
+                        potentially be exploited and how we can prevent these vulnerabilities from
+                        occurring in our C++ code. 
+                    </p>
+                </article>
+            </section>
+
+            <section class="main-section" id="Legal_Disclaimer">
+                <header><h2>Legal Disclaimer</h2></header>
+                <article>
+                    <p>
+                        Before we can get started we have to deal with the legalities of what we are going over,
+                        because we will have actual examples of vulnerabilities in code it is important to note 
+                        that the content of this article is for educational purposes only. All techniques and tools
+                        used in this article should only be used on a system for which you have gotten prior authorization
+                        in writing. Unless it is owned by yourself. This article and its author does not condone or encourage
+                        any illegal activities. We need to emphasize the importance of ethical and responsible use of the 
+                        knowledge you will gained from this article. The main goal of this article is to learn and be better
+                        secure in your own system and those of others not to use that knowledge for malicious intent.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section" id="What_is_C++">
+                <header><h2>What is C++</h2></header>
+                <article>
+                    <p>
+                        C++ (or “C-plus-plus”) is a generic programming language for building software. Its an object-oriented
+                        language. In other words, it emphasizes using data fields with unique attributes/objects rather than logic
+                        or functions. A common example of an object is a user account on a website. Typically, a user account 
+                        contains closely related data like first name, last name, and email address. Bundling this information 
+                        together into an object makes it easy to replicate the process of creating a new account. C++ (or “C-plus-plus”) 
+                        offers low level access to system resources and functions. What that means is that programers like myself can write 
+                        code that interacts directly with the hardware and Operating System(OS). This level of access is not possible or can
+                        be harder with some higher level languages. C++ has been around multiple decades, ths means that there are numerous 
+                        libraries and educational resources available. This also means the language has been thoroughly tested and refined over
+                        the years, making it a very reliable choice for building complex applications. C++ can also be very fast when following 
+                        proper coding practices. This speed becomes very helpful when doing things like creating tools in C++ that require realtime
+                        processing or handling of large amounts of data. C++ is still used by millions of developers and will probably be around for 
+                        many mor years, so if you learn it there is no concern about it becoming obsolete anytime soon.  
+                    </p> 
+                    <p>
+                        Now that we have gone over some of the good qualities of C++ it would only be fair and honest to mention the disadvantages associated 
+                        with the language. First off we have <a href"https://dictionary.cambridge.org/dictionary/english/compilation">compilation</a>. C++ 
+                        code needs to be recompiled every time a change is made to the code this can be time consuming and slow down the development process.
+                        This is also a problem for pen testers if your constantly making changes to your code and need to recompiled every time a change is made.
+                        Furthermore if you have time constraints, like there are in any line of work, this can be a huge negative quality. 
+                    </p>
+                    <p>
+                        Next we have complexity. C++ is considered <a href="https://www.thefreedictionary.com/syntactically">syntactically</a> complex when 
+                        compared to other languages. The syntax can be difficult to learn and master, it takes a long time to become proficient in writing efficient
+                        C++ code. This can make it hard to learn when coming from a more syntactically simpler coding language.    
+                    </p>   
+                    <p>
+                        Now we move on to why we are here in the first place. Theres a real problem with the lack of safety features. C++ does not have automatic security
+                        features that come standard with some newer programming languages. This can result in vulnerable code if one is not cautious, extra precautions
+                        need to be taken to ensure that your code is secure and free of vulnerabilities. Even though this is a negative, its not a big one do to the fact that
+                        a lot of <a href="https://en.wikipedia.org/wiki/Pin_(computer_program)">PIN testing tools</a> do not need to be production level, most the time they
+                        just need to get the job done.   
+                     </p>
+                     <p>
+                        The final problem we are going to bring up is portability. C++ often needs to be designed and compiled for a specific platform or operating system(OS).
+                        This can limit the portability of the code, making it more difficult to run the code on different platforms or systems. This is a problem for developers
+                        that need their code to be compatible with a wide range of platforms or systems and can increase the amount of time and effort required to maintain and
+                        update the code. Agin this doesn't apply to us as much as it would to a developer, but it can be a disadvantage none the less.  
+                     </p>       
+                   
+                </article>
+            </section>  
+
+            <section class="main-section" id="Why_is_this_Important">
+                <header><h2>Why is this Important</h2></header>
+                <article>
+                    <P>
+                        We are almost on to the good stuff but before we get there we need to discuss why it is important that you know about common vulnerabilities found in C++.
+                        C++ is a powerful language that gives developers a lot of control over memory allocation and manipulation. However, this control also means that there's 
+                        increased complexity and potential for vulnerabilities. Therefor, it's important for developers to understand common vulnerabilities in order to write more
+                        secure code. Also many industries have strict regulatory requirements for software security. Failure to comply with these requirements can result in some 
+                        serious legal and financial consequences. This means that even if your code isn't compromised, not complying with security requirements can have serious
+                        repercussions to yourself or your employer. It is important for developers to prioritize secure coding practices and to be aware of common vulnerabilities
+                        in order to ensure the security and compliance  of their software. Not to mention if these procedures aren't followed the damage to you or your employers 
+                        reputation after a data breach, and the possible financial fallout can cause heads to roll and you can imagine how hard it might be to get a job after your
+                        bad practices lead to said data breach. By understanding common vulnerabilities in C++ code and taking steps to prevent them from being introduced in the 
+                        first place, developers can save time and resources in the long run. Most importantly it can lead to more efficient development cycles, fewer security instances
+                        and ultimately lower the cost for an organization.   
+                    </P>
+                </article>
+            </section>
+            
+            <section class="main-section" id="Best_Practices">
+                <header><h2>Best Practices</h2></header>
+                <article>                   
+                     <p>
+                        When coding in C++ there are many best practices to follow to prevent vulnerabilities, but we are only going to touch only a few of the major ones. Probably 
+                        one of the most is to validate all input, data from external sources and network input. Input validation should include checking for valid data types, links and 
+                        arrange to prevent unexpected data from being processed. Another best practice is to use memory safe constructs when coding memory, such as smart pointers or 
+                        reference counting, this can prevent common vulnerabilities such as Buffer Overflows and NULL pointer Dereferencing, you will learn what these are shortly. By using
+                        these constructs developers can insure that memory is allocated and deallocated properly, that reduces the risk of memory related vulnerabilities.    
+                        It is essential to be positive library functions are used correctly to avoid common vulnerabilities. For example 
+                        <a href="https://www.tutorialspoint.com/c_standard_library/c_function_strcpy.htm">strcpy</a> is less secure
+                        than <a href="https://www.tutorialspoint.com/c_standard_library/c_function_strncpy.htm">strncpy</a> so developers should use strncpy to avoid Buffer Overflows. These simple best
+                        practices can help developers reduce the potential for vulnerabilities in their C++ code.
+                        </p>
+                    <p>
+                       Regular code reviews are another essential habit to get into. They are often the most common solution to identifying potential vulnerabilities earl on in the development
+                       process. This helps catch bugs and security flaws early and can improve code quality as well. Collaborating with other developers through paired code reviews can alow developers 
+                       to learn from one another and share best practices. Using automated code review tools can help things go faster and can be implemented in the development process, giving you
+                       comfort knowing it is regularly being scanned for security issues. The last thing that need top be mentioned before we move on is the need for continuing education and training
+                       the industry if forever growing and moving forward at its own pace and its a fast one. If you think you have it all figured out then your already behind. Now that you have some 
+                       understanding of different vulnerabilities we can move on to some examples of vulnerable code and what makes it vulnerable. First up......   
+                    </p>
+                </article>
+            </section>
+                    
+            <section class="main-section" id="Buffer_Overflow">
+                <header><h2>Buffer Overflow</h2></header>
+                <article>
+                    <p>
+                        
+                        This program creates a <a href="https://www.geeksforgeeks.org/cpp-arrays/">character arrays</a> called Buffer with a size of [5] characters. It then prompts the user to enter their
+                        name using <a href="https://www.geeksforgeeks.org/cin-in-c/">cin</a> and stores it in buffer. After the user enters there name and presses enter it prints out there name.   
+                    </p>
+                    <img src="https://i.imgur.com/PH9FNGo.jpg" /> 
+                    <p>
+                        The vulnerability in this code lies in the fact that cin does not limit the number of characters that the user can input, so it's possible for the user to input more than [5] 
+                        characters. Ths results in a Buffer Overflow. That means the user could potentially overwrite memory that is not allocated for the buffer variable leading to undefined behavior 
+                        depending on what your the computer is doing with this other memory at the time of attack. For example if the user enters a name with more than [5] characters such as BobbyB, the
+                        program will write beyond the bounds of the buffer variable and overwrite memory that is not allocated for it. This can cause a crash. 
+                    </p>
+                    <p>
+                        There are many ways to discover vulnerabilities like this one, but a simple way would be to search through  the code for any arrays that are limited to a specific size. Once discovered,
+                        you would then look to see if there's any way to manipulate the data that's being stored in that array, like when we used a name longer than the [5] characters.
+                        The fix for this vulnerability is to ensure that the input from the user does not exceed the size of the buffer. Next we move onto NULL Pointer Dereferencing.
+                    </p>
+                </article>
+            </section>
+            
+
+            <section class="main-section" id="NULL_Pointer_Dereference">
+                <header><h2>NULL Pointer Dereference</h2></header>
+                <article>
+                    <p>
+                       
+                        This program creates an integer pointer called ptr and initializes it to NULL. It then tries to dereference the pointer using the * (star) operator and prints the value of the integer
+                        that it points to. The vulnerability in this code lies in the fact that ptr is initialized to NULL, which means that it is not pointed to a valid memory location. When we try to dereference
+                        ptr using the star (*) operator we are trying to access memory at an invalid address. this can result in a NULL Point or dereference like the previous example. This can cause the program to
+                        crash or behave in an unpredictable way   
+                    </p>
+                     <img src="https://i.imgur.com/OTWkK1f.jpg" /> 
+                    <p>
+                        Searching for this vulnerability is a bit more difficult. You have to find all pointers that are initialized as NULL and then gon through the code to see if you can discover any functionality
+                        where those pointers would be accessed before being pointed to a valid memory location. To fix this vulnerability, we need to ensure that ptr points to a valid memory location before 
+                        dereferencing it.
+                    </p>
+                </article>
+            </section>
+
+            <section class="main-section" id="Integer_Overflow">
+                <header><h2>Integer Overflow</h2></header>
+                <article>
+                <p>
+                   Next we have Integer Overflow. The following program creates two integer variables, X and Y, and then it initializes them to 2147483647 and 1 respectively. Then adds the value X to the and Y together
+                   and stores the results in a third variable called Z. Finally, it prints out the value of Z. The vulnerability in the code lies in the fact that the addition of X and Y result in an Integer Overflow.
+                   Since X is already at the maximum value for assigned 32 bit integer, adding one o it will result in a value of -2147483648 due to integer wraparound. This can cause Z to have an unexpected value
+                   leading to undefined behavior.  
+                </p>        
+                <p>        
+                  Searching for an Integer Overflow is similar to searching for a buffer overflow vulnerability. You can search through the code for any integer. After discovering one, you would then look top see if 
+                  there's any way to manipulate the data that's being stored in a way that could exceed the max value. To fix this vulnerability, we need to ensure that the value of X and Y do not cause an   
+                  integer overflow when added together or when using a larger data type. 
+                 </p>       
+                </article>
+            </section>   
+            
+            <section class="main-section" id="Format_String_Vulnerability">
+                <header><h2>Format String Vulnerability</h2></header>
+                    <article>
+                 <p>     
+                    <img src="https://i.imgur.com/jzidjCz.jpg" /> 
+                    The last vulnerability we are going to discuss is format String Vulnerability. This program prompts the user to enter their name and then prints out a welcome message that includes their name.
+                    The vulnerability in this code lies in the fact that the input variable is passed directly to the cout statement without any format string validation.
+                    An attacker can exploit this vulnerability by entering a malicious input that includes for string specifiers, such as %X, %P or %N. These specifiers can cause the program to print out arbitrary code
+                    leading to security issues such as information disclosure or remote code execution.
+                </p>
+                <p>
+                    To search for this vulnerability, we could go through user input through a C++ program and identify any areas where the input is getting stored in a character array without any sort of validation
+                    To fix this vulnerability, we need to ensure that the input variable is properly validated before being passed to the cout statement.
+                </p>
+                    </article>
+            </section>
+            
+            <section class="main-section" id="Many_Thanks">
+                <header><h2>Many Thanks</h2></header>
+                <article>
+                    <p>
+                        Well this is were we part ways. I hope that this was some help with where ever your going next, who knows maybe someday we will get a chance to grab a coffee. I look forward to my next project
+                        and with any luck I will get to share it with all of you. Agin many thanks for reading through my page. 
+                    </p>
+                </article>
+            </section>
+            
+                
+        </main>
+   
+</body>
+</html>
